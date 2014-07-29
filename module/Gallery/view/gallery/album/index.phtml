@@ -1,1 +1,52 @@
-Показать альбомы.
+<h1>Список альбомов:</h1>
+<a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'create')) ?>">Добавить еще</a>
+<hr/>
+<div style="width:100%;">
+<?php $playFloat = true; foreach($albums as $album): ?>
+<div style="width:500px;height:277px;float:<?php if($playFloat): ?>left<?php else: ?>right<?php endif ?>;border:1px solid black;overflow-y:auto;">
+<table border="0">
+<tr style="border-bottom:1px solid black;">
+    <td colspan="2" align="center">
+        <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'view', 'id' => $album->ID)) ?>">Просмотр</a>&nbsp;&nbsp;&nbsp;
+        <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'update', 'id' => $album->ID)) ?>">Редактирование</a>&nbsp;&nbsp;&nbsp;
+        <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'delete', 'id' => $album->ID)) ?>">Удаление</a>
+    </td>
+</tr>
+<tr style="height:250px;">
+    <td style="width:250px;" align="center" valign="middle">
+        <?php if(isset($album->photo_src, $album->photo_ext)): ?>
+        <img src="<?php echo '/upload/'.$album->ID.'/'.$album->photo_src.'.'.$album->photo_ext ?>" />
+        <?php else: ?>
+        <img src="/img/noimage.jpg" width="250" height="250" />
+        <?php endif ?>
+    </td>
+    <td style="width:250px;" align="center" valign="top">
+        <b>Название:</b>
+        <i><font color="blue"><div class="albumName" id="albumName_<?php echo $album->ID ?>"><?php echo $album->name ?></div></font></i>
+        <br/>
+        <b>Описание:</b>
+        <i><font color="blue"><div class="albumDescription" id="albumDescription_<?php echo $album->ID ?>"><?php echo $album->description ?></div></font></i>
+        <div style="width:90%;text-align:right;">
+        Фотограф: <?php echo $album->owner ?><br/>
+        <?php if(isset($album->email)): ?>
+        Email: <?php echo $album->email ?><br/>
+        <?php endif ?>
+        <?php if(isset($album->phone)): ?>
+        Телефон: <?php echo $album->phone ?><br/>
+        <?php endif ?>
+        </div>
+        <hr/>
+        <?php if(isset($album->count_photo, $album->photo_created)): ?>
+        В альбоме: <font color="red"><?php echo $album->count_photo ?></font> изображений.<br/>
+        <font color="red"><?php echo $album->photo_created ?></font> было добавлено последнее.
+        <?php else: ?>
+        В альбоме нет изображений.
+        <?php endif ?>
+    </td>
+</tr>
+</table>
+</div>
+<?php if(!$playFloat): ?><div style="clear:both;">&nbsp</div><?php endif ?>
+<?php $playFloat = !$playFloat; endforeach ?>
+<br style="clear:both;"/>
+</div>
