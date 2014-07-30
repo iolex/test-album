@@ -1,5 +1,8 @@
 <h1>Список альбомов:</h1>
-<a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'create')) ?>">Добавить альбом</a>
+<a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'create')) ?>">Создать альбом</a>
+<?php if($albums->count() > 0): ?>
+| <a href="<?php echo $this->url('Gallery/default', array('controller' => 'photo', 'action' => 'create')) ?>">Добавить фото</a>
+<?php endif ?>
 <hr/>
 <div style="width:100%;">
 <?php if($albums->count() > 0): ?>
@@ -16,7 +19,7 @@
 <tr style="height:250px;">
     <td style="width:250px;" align="center" valign="middle">
         <?php if(isset($album->photo_src, $album->photo_ext)): ?>
-        <img src="<?php echo '/upload/'.$album->ID.'/'.$album->photo_src.'.'.$album->photo_ext ?>" />
+        <img src="<?php echo '/upload/'.$album->ID.'/'.$album->photo_src.'_min.'.$album->photo_ext ?>" />
         <?php else: ?>
         <img src="/img/noimage.jpg" width="250" height="250" />
         <?php endif ?>
@@ -42,8 +45,8 @@
         <hr/>
         <font size="-2">
         <?php if(isset($album->count_photo, $album->photo_created)): ?>
-        В альбоме: <font color="red"><?php echo $album->count_photo ?></font> изображений.<br/>
-        <font color="red"><?php echo $album->photo_created ?></font> было добавлено последнее.
+        В альбоме: <font color="red"><?php echo $album->count_photo ?></font> фото.<br/>
+        <font color="red"><?php echo $album->photo_created ?></font> добавлено последнее.
         <?php else: ?>
         В альбоме нет изображений.
         <?php endif ?>

@@ -66,7 +66,7 @@ class AlbumModel
         return $resultSet;
     }
     
-    public function getAlbum($id = null)
+    public function getAlbum($id)
     {
         $resultSet = $this->tableGateway->select(function(Select $select) use ($id) {
             $select->columns(array(
@@ -81,20 +81,17 @@ class AlbumModel
             ));
             
             $select->where(array('ID = ?' => $id));
+            
+            $select->limit(1);
         });
         
         $album = $resultSet->current();
-        if (!$album)
-            return false;
         
         return $album;
     }
     
     public function saveAlbum($data, $id = null)
     {
-        if (!isset($data))
-            return false;
-        
         $album = array(
             'name'        => (!empty($data['albumName']))        ? $data['albumName']             : 'std:name',
             'description' => (!empty($data['albumDescription'])) ? $data['albumDescription']      : 'std:description',
@@ -107,15 +104,10 @@ class AlbumModel
             $this->tableGateway->update($album, array('ID' => $id));
         else
             $this->tableGateway->insert($album);
-        
-        return true;
     }
     
-    public function deleteAlbum($id = null)
+    public function deleteAlbum($id)
     {
-        if (isset($id))
-            $this->tableGateway->delete(array('ID' => $id));
-        
-        return true;
+        $this->tableGateway->delete(array('ID' => $id));
     }
 }

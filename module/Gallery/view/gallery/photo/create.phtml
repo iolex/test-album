@@ -1,0 +1,37 @@
+<h1>Добавить фото:</h1>
+<a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'index')) ?>">Уйти в каталог</a>
+<?php if(isset($id)): ?>
+| <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'view', 'id' => $id)) ?>">Уйти в альбом</a>
+<?php endif ?>
+<hr/>
+<?php $form->prepare() ?>
+<?php echo $this->form()->openTag($form) ?>
+<table border="0">
+<?php if(!isset($id)): ?>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('photoAlbum')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('photoAlbum')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('photoAlbum')) ?></td>
+</tr>
+<?php endif ?>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('photoName')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('photoName')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('photoName')) ?></td>
+</tr>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('photoMetainfo')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('photoMetainfo')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('photoMetainfo')) ?></td>
+</tr>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('photoFile')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('photoFile')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('photoFile')) ?></td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td colspan="3" align="left"><?php echo $this->formSubmit($form->get('submit')) ?></td>
+</tr>
+</table>
+<?php echo $this->form()->closeTag() ?>

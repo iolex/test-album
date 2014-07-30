@@ -3,6 +3,7 @@
 namespace Gallery;
 
 use Gallery\Model\AlbumModel;
+use Gallery\Model\PhotoModel;
 use Zend\Db\TableGateway\TableGateway;
 
 
@@ -37,14 +38,14 @@ class Module
                     return new TableGateway('album', $dbAdapter);
                 },
                 
-                /*'Gallery\Model\PhotoModel' => function($sm) {
-                    $tableGateway = $sm->get('AlbumTableGateway');
-                    return new AlbumModel($tableGateway);
+                'Gallery\Model\PhotoModel' => function($sm) {
+                    $tableGateway = $sm->get('PhotoTableGateway');
+                    return new PhotoModel($tableGateway);
                 },
                 'PhotoTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new TableGateway('photo', $dbAdapter);
-                },*/
+                },
             ),
         );
     }

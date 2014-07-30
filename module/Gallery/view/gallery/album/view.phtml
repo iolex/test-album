@@ -1,3 +1,44 @@
 <h1>Просмотреть альбом:</h1>
 <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'index')) ?>">Уйти в каталог</a>
+| <a href="<?php echo $this->url('Gallery/default', array('controller' => 'photo', 'action' => 'create', 'id' => $album->ID)) ?>">Добавить фото</a>
 <hr/>
+<div style="width:100%;">
+<table border="0" style="width:100%;">
+<tr>
+    <td align="center">
+    <div style="border:1px dashed black;padding:5px;">
+    <b><font color="blue"><?php echo $album->name ?></font></b>, ...
+    </div>
+    </td>
+</tr>
+<tr><td align="center">&nbsp;</td></tr>
+<tr>
+    <td>
+    <?php if($photos->count() > 0): ?>
+    <?php foreach($photos as $photo): ?>
+    <div style="float:left;padding:1px;margin:5px;border:1px dotted black;">
+    <table>
+    <tr>
+        <td align="center">
+        <img src="<?php echo '/upload/'.$album->ID.'/'.$photo->src.'_min.'.$photo->ext ?>" />
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+        <b><?php echo $photo->name ?></b><br/>
+        <?php echo $photo->created ?><br/>
+        <?php if(isset($photo->metainfo)): ?>
+        <?php echo $photo->metainfo ?>
+        <?php endif ?>
+        </td>
+    </tr>
+    </table>
+    </div>
+    <?php endforeach ?>
+    <?php else: ?>
+    В альбоме нет изображений.
+    <?php endif ?>
+    </td>
+</tr>
+</table>
+</div>
