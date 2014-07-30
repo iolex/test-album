@@ -36,6 +36,15 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new TableGateway('album', $dbAdapter);
                 },
+                
+                /*'Gallery\Model\PhotoModel' => function($sm) {
+                    $tableGateway = $sm->get('AlbumTableGateway');
+                    return new AlbumModel($tableGateway);
+                },
+                'PhotoTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new TableGateway('photo', $dbAdapter);
+                },*/
             ),
         );
     }

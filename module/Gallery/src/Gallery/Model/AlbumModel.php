@@ -6,8 +6,6 @@ use Zend\Db\TableGateway\TableGateway;
 
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Expression;
-//use Zend\Paginator\Adapter\DbSelect;
-//use Zend\Paginator\Paginator;
 
 
 class AlbumModel
@@ -19,9 +17,9 @@ class AlbumModel
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll($paginated = false)
+    public function fetchAll()
     {
-        $resultSet = $this->tableGateway->select(function(Select $select){
+        $resultSet = $this->tableGateway->select(function(Select $select) {
             $select->columns(array(
                 'ID',
                 'name',
@@ -61,63 +59,63 @@ class AlbumModel
                 ),
                 $select::JOIN_LEFT
             );
+            
+            $select->order('ID');
         });
+        
         return $resultSet;
-        
-        
-        
-        /*if ($paginated) {
-            $select = new Select('album');
-            $resultSetPrototype = new ResultSet();
-            $resultSetPrototype->setArrayObjectPrototype(new Album());
-            $paginatorAdapter = new DbSelect(
-                $select,
-                $this->tableGateway->getAdapter(),
-                $resultSetPrototype
-            );
-            $paginator = new Paginator($paginatorAdapter);
-            return $paginator;
-        }*/
     }
     
-    public function getAlbum($id)
+    public function getAlbum($id = null)
     {
-        $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('ID' => $id));
-        $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("Error while select album ($id)");
-        }
-        return $row;
+        $resultSet = $this->tableGateway->select(function(Select $select) use ($id) {
+            $select->columns(array(
+                'ID',
+                'name',
+                'description',
+                'owner',
+                'email',
+                'phone',
+                'created',
+                'updated',
+            ));
+            
+            $select->where(array('ID = ?' => $id));
+        });
+        
+        $album = $resultSet->current();
+        if (!$album)
+            return false;
+        
+        return $album;
     }
     
-    public function saveAlbum(Album $album)
+    public function saveAlbum($data, $id = null)
     {
-        $data = array(
-            'name'        => $album->name,
-            'description' => $album->description,
-            'owner'       => $album->owner,
-            'email'       => $album->email,
-            'phone'       => $album->phone,
+        if (!isset($data))
+            return false;
+        
+        $album = array(
+            'name'        => (!empty($data['albumName']))        ? $data['albumName']             : 'std:name',
+            'description' => (!empty($data['albumDescription'])) ? $data['albumDescription']      : 'std:description',
+            'owner'       => (!empty($data['albumOwner']))       ? $data['albumOwner']            : 'std:owner',
+            'email'       => (!empty($data['albumEmail']))       ? $data['albumEmail']            : null,
+            'phone'       => (!empty($data['albumPhone']))       ? $data['albumPhone']            : null,
         );
         
-        $id = (int) $album->id;
-        if ($id == 0) {
-            $this->tableGateway->insert($data);
-        } else {
-            if ($this->getAlbum($id)) {
-                $this->tableGateway->update($data, array('ID' => $id));
-            } else {
-                throw new \Exception('Error while update album ($id)');
-            }
-        }
+        if (isset($id))
+            $this->tableGateway->update($album, array('ID' => $id));
+        else
+            $this->tableGateway->insert($album);
         
-        //return ID
+        return true;
     }
     
-    public function deleteAlbum($id)
+    public function deleteAlbum($id = null)
     {
-        $id  = (int) $id;
-        $this->tableGateway->delete(array('ID' => $id));
+        if (isset($id))
+            $this->tableGateway->delete(array('ID' => $id));
+        
+        return true;
     }
 }

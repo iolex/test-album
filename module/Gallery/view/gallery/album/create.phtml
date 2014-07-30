@@ -1,1 +1,36 @@
-Создать альбом.
+<h1>Создать альбом:</h1>
+<a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'index')) ?>">Уйти в каталог</a>
+<hr/>
+<?php echo $this->form()->openTag($form) ?>
+<table border="0">
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('albumName')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('albumName')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('albumName')) ?></td>
+</tr>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('albumDescription')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('albumDescription')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('albumDescription')) ?></td>
+</tr>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('albumOwner')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('albumOwner')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('albumOwner')) ?></td>
+</tr>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('albumEmail')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('albumEmail')) ?><br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('albumEmail')) ?></td>
+</tr>
+<tr>
+    <td align="right" valign="top"><?php echo $this->formLabel($form->get('albumPhone')) ?></td><td>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top"><?php echo $this->formElement($form->get('albumPhone')) ?><br/>+7 (XXX) XXX-XX-XX<br/><br/></td>
+    <td valign="top"><?php echo $this->formElementErrors($form->get('albumPhone')) ?></td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td colspan="3" align="left"><?php echo $this->formSubmit($form->get('submit')) ?></td>
+</tr>
+</table>
+<?php echo $this->form()->closeTag() ?>
