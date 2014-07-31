@@ -4,7 +4,6 @@
 | <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'view', 'id' => $id)) ?>">Уйти в альбом</a>
 <?php endif ?>
 <hr/>
-<?php $form->prepare() ?>
 <?php echo $this->form()->openTag($form) ?>
 <table border="0">
 <?php if(!isset($id)): ?>

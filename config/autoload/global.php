@@ -12,7 +12,7 @@
  */
 
 return array(
-    'db' => array(
+    /*'db' => array(
         'driver'         => 'Pdo',
         'dsn'            => 'mysql:dbname=test_ftechno;host=localhost',
         'driver_options' => array(
@@ -23,5 +23,5 @@ return array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
         ),
-    ),
+    ),*/
 );

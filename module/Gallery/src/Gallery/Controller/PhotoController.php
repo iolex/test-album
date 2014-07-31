@@ -15,8 +15,7 @@ class PhotoController extends AbstractActionController
     public function getPhotoModel()
     {
         if (!$this->photoModel) {
-            $sm = $this->getServiceLocator();
-            $this->photoModel = $sm->get('Gallery\Model\PhotoModel');
+            $this->photoModel = $this->getServiceLocator()->get('Gallery\Model\PhotoModel');
         }
         return $this->photoModel;
     }
@@ -25,8 +24,7 @@ class PhotoController extends AbstractActionController
     public function getAlbumModel()
     {
         if (!$this->albumModel) {
-            $sm = $this->getServiceLocator();
-            $this->albumModel = $sm->get('Gallery\Model\AlbumModel');
+            $this->albumModel = $this->getServiceLocator()->get('Gallery\Model\AlbumModel');
         }
         return $this->albumModel;
     }
@@ -54,7 +52,7 @@ class PhotoController extends AbstractActionController
         $aView = array();
         $id = $this->params()->fromRoute('id');
         
-        $form = new PhotoForm('createPhoto');
+        $form = new PhotoForm('addPhoto');
         $filter = new PhotoFilter();
         $form->setInputFilter($filter->getInputFilter());
         
@@ -86,22 +84,24 @@ class PhotoController extends AbstractActionController
         
         $request = $this->getRequest();
         
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
                 $request->getFiles()->toArray()
             );
             $form->setData($post);
             if ($form->isValid()) {
-                
-                
-                
-                echo '123';exit;
-                //$this->getAlbumModel()->saveAlbum($form->getData());
-                //return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'index'));
+                if (isset($id)) {
+                    $this->getPhotoModel()->savePhoto($form->getData(), $id);
+                    return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'view', 'id' => $id));
+                } else {
+                    $this->getPhotoModel()->savePhoto($form->getData());
+                    return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'index'));
+                }
             }
         }
         
+        $form->prepare();
         $aView['form'] = $form;
         return new ViewModel($aView);
     }
@@ -109,10 +109,11 @@ class PhotoController extends AbstractActionController
     // TODO: AJAX
     public function deleteAction()
     {
-        /*$id = $this->params()->fromRoute('id');
+        $id = $this->params()->fromRoute('id');
         if (isset($id)) {
-            $this->getAlbumModel()->deleteAlbum($id);
+            $album_id = $this->getPhotoModel()->deletePhoto($id);
+            return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'view', 'id' => $album_id));
         }
-        return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'index'));*/
+        return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'index'));
     }
 }

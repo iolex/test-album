@@ -1,4 +1,4 @@
-<h1>Список альбомов:</h1>
+<h1>Каталог:</h1>
 <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'create')) ?>">Создать альбом</a>
 <?php if($albums->count() > 0): ?>
 | <a href="<?php echo $this->url('Gallery/default', array('controller' => 'photo', 'action' => 'create')) ?>">Добавить фото</a>
@@ -18,8 +18,8 @@
 </tr>
 <tr style="height:250px;">
     <td style="width:250px;" align="center" valign="middle">
-        <?php if(isset($album->photo_src, $album->photo_ext)): ?>
-        <img src="<?php echo '/upload/'.$album->ID.'/'.$album->photo_src.'_min.'.$album->photo_ext ?>" />
+        <?php if(isset($album->photo_src)): ?>
+        <img src="<?php echo '/upload/'.$album->ID.'/'.$album->photo_src.'_min.PNG' ?>" />
         <?php else: ?>
         <img src="/img/noimage.jpg" width="250" height="250" />
         <?php endif ?>

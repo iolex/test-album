@@ -16,20 +16,21 @@
     <td>
     <?php if($photos->count() > 0): ?>
     <?php foreach($photos as $photo): ?>
-    <div style="float:left;padding:1px;margin:5px;border:1px dotted black;">
-    <table>
+    <div style="display:inline-block;padding:1px;margin:5px;border:1px dotted black;">
+    <table width="250" height="250">
     <tr>
-        <td align="center">
-        <img src="<?php echo '/upload/'.$album->ID.'/'.$photo->src.'_min.'.$photo->ext ?>" />
+        <td align="center" valign="middle">
+        <img src="<?php echo '/upload/'.$album->ID.'/'.$photo->src.'_min.PNG' ?>" />
         </td>
     </tr>
     <tr>
-        <td align="center">
+        <td align="center" valign="bottom">
         <b><?php echo $photo->name ?></b><br/>
         <?php echo $photo->created ?><br/>
         <?php if(isset($photo->metainfo)): ?>
         <?php echo $photo->metainfo ?>
         <?php endif ?>
+        <a href="<?php echo $this->url('Gallery/default', array('controller' => 'photo', 'action' => 'delete', 'id' => $photo->ID)) ?>">Удалить</a>
         </td>
     </tr>
     </table>

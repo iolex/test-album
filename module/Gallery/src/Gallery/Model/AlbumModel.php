@@ -93,21 +93,32 @@ class AlbumModel
     public function saveAlbum($data, $id = null)
     {
         $album = array(
-            'name'        => (!empty($data['albumName']))        ? $data['albumName']             : 'std:name',
-            'description' => (!empty($data['albumDescription'])) ? $data['albumDescription']      : 'std:description',
-            'owner'       => (!empty($data['albumOwner']))       ? $data['albumOwner']            : 'std:owner',
-            'email'       => (!empty($data['albumEmail']))       ? $data['albumEmail']            : null,
-            'phone'       => (!empty($data['albumPhone']))       ? $data['albumPhone']            : null,
+            'name'        => !empty($data['albumName'])        ? $data['albumName']             : 'std:name',
+            'description' => !empty($data['albumDescription']) ? $data['albumDescription']      : 'std:description',
+            'owner'       => !empty($data['albumOwner'])       ? $data['albumOwner']            : 'std:owner',
+            'email'       => !empty($data['albumEmail'])       ? $data['albumEmail']            : null,
+            'phone'       => !empty($data['albumPhone'])       ? $data['albumPhone']            : null,
         );
         
-        if (isset($id))
+        if (isset($id)) {
             $this->tableGateway->update($album, array('ID' => $id));
-        else
+        } else {
             $this->tableGateway->insert($album);
+            
+            $newDir = $this->tableGateway->getLastInsertValue();
+            
+            $currentPath = PUBLIC_PATH.DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.$newDir;
+            if (!is_dir($currentPath))
+                @mkdir($currentPath);
+        }
     }
     
     public function deleteAlbum($id)
     {
         $this->tableGateway->delete(array('ID' => $id));
+        
+        $currentPath = PUBLIC_PATH.DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.$id;
+        if (is_dir($currentPath) && count(scandir($currentPath)) == 2)
+            @rmdir($currentPath);
     }
 }

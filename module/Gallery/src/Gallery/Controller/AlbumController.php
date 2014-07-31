@@ -15,8 +15,7 @@ class AlbumController extends AbstractActionController
     public function getAlbumModel()
     {
         if (!$this->albumModel) {
-            $sm = $this->getServiceLocator();
-            $this->albumModel = $sm->get('Gallery\Model\AlbumModel');
+            $this->albumModel = $this->getServiceLocator()->get('Gallery\Model\AlbumModel');
         }
         return $this->albumModel;
     }
@@ -25,8 +24,7 @@ class AlbumController extends AbstractActionController
     public function getPhotoModel()
     {
         if (!$this->photoModel) {
-            $sm = $this->getServiceLocator();
-            $this->photoModel = $sm->get('Gallery\Model\PhotoModel');
+            $this->photoModel = $this->getServiceLocator()->get('Gallery\Model\PhotoModel');
         }
         return $this->photoModel;
     }
@@ -53,16 +51,16 @@ class AlbumController extends AbstractActionController
         ));
     }
     
-    // TODO: AJAX
+    // TODO: AJAX, [MERGE create + update]
     public function createAction()
     {
-        $form = new AlbumForm('createAlbum');
+        $form = new AlbumForm('saveAlbum');
         $filter = new AlbumFilter();
         $form->setInputFilter($filter->getInputFilter());
         $form->setAttribute('action', $this->url()->fromRoute('Gallery/default', array('controller' => 'album', 'action' => 'create')));
         $request = $this->getRequest();
         
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $this->getAlbumModel()->saveAlbum($form->getData());
@@ -70,12 +68,13 @@ class AlbumController extends AbstractActionController
             }
         }
         
+        $form->prepare();
         return new ViewModel(array(
             'form' => $form,
         ));
     }
     
-    // TODO: AJAX
+    // TODO: AJAX, [MERGE create + update]
     public function updateAction()
     {
         $id = $this->params()->fromRoute('id');
@@ -97,15 +96,16 @@ class AlbumController extends AbstractActionController
         } else {
             $data = $this->getAlbumModel()->getAlbum($id);
             $formData = array(
-                'albumName'        => (!empty($data->name))        ? $data->name        : '',
-                'albumDescription' => (!empty($data->description)) ? $data->description : '',
-                'albumOwner'       => (!empty($data->owner))       ? $data->owner       : '',
-                'albumEmail'       => (!empty($data->email))       ? $data->email       : '',
-                'albumPhone'       => (!empty($data->phone))       ? $data->phone       : '',
+                'albumName'        => !empty($data->name)        ? $data->name        : '',
+                'albumDescription' => !empty($data->description) ? $data->description : '',
+                'albumOwner'       => !empty($data->owner)       ? $data->owner       : '',
+                'albumEmail'       => !empty($data->email)       ? $data->email       : '',
+                'albumPhone'       => !empty($data->phone)       ? $data->phone       : '',
             );
             $form->setData($formData);
         }
         
+        $form->prepare();
         return new ViewModel(array(
             'form' => $form,
         ));
