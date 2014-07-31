@@ -20,7 +20,7 @@
     <table width="250" height="250">
     <tr>
         <td align="center" valign="middle">
-        <img src="<?php echo '/upload/'.$album->ID.'/'.$photo->src.'_min.PNG' ?>" />
+        <a href="<?php echo $this->url('Gallery/default', array('controller' => 'photo', 'action' => 'view', 'id' => $photo->ID)) ?>"><img src="<?php echo '/upload/'.$album->ID.'/'.$photo->src.'_min.PNG' ?>" /></a>
         </td>
     </tr>
     <tr>

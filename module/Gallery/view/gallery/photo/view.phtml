@@ -1,0 +1,23 @@
+<h1>Просмотреть фото:</h1>
+<a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'index')) ?>">Уйти в каталог</a>
+| <a href="<?php echo $this->url('Gallery/default', array('controller' => 'album', 'action' => 'view', 'id' => $photo['album_id'])) ?>">Уйти в альбом</a>
+<hr/>
+<div style="width:100%;">
+<table border="0" style="width:100%;">
+<tr>
+    <td align="center">
+    <div style="border:1px dashed black;padding:5px;">
+    <b><font color="blue"><?php echo $photo['name'] ?></font></b>, ... 
+    </div>
+    </td>
+</tr>
+<tr><td align="center">&nbsp;</td></tr>
+<tr>
+    <td>
+    <div style="width:100%;padding:5px;border:1px dotted black;">
+    <img src="<?php echo '/upload/'.$photo['album_id'].'/'.$photo['src'].'.'.$photo['ext'] ?>" style="display: block;margin: 0 auto;" />
+    </div>
+    </td>
+</tr>
+</table>
+</div>

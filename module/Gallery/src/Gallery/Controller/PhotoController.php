@@ -37,13 +37,9 @@ class PhotoController extends AbstractActionController
         if (!isset($id))
             return $this->redirect()->toRoute('Gallery/default', array('controller' => 'album', 'action' => 'index'));
         
-        
-        // ПОКАЖЕМ ОДНУ ФОТКУ и + -
-        /*
         return new ViewModel(array(
-            'album' => $this->getAlbumModel()->getAlbum($id),
-            'photos' => $this->getPhotoModel()->fetchAll($id),
-        ));*/
+            'photo' => $this->getPhotoModel()->getPhoto($id),
+        ));
     }
     
     // TODO: AJAX

@@ -66,41 +66,13 @@ class PhotoModel
     
     public function getNextPhoto($id)
     {
-        /*$resultSet = $this->tableGateway->select(function(Select $select) use ($id) {
-            $select->columns(array(
-                'ID',
-                'album_id',
-                'src',
-                'ext',
-                'name',
-                'metainfo',
-                'created',
-                'updated',
-            ));
-            
-            
-            
-            $sub->
-            
-            
-            
-            
-            $select->where(array('ID = ?' => $id));
-            
-            $select->limit(1);
-        });
         
-        $photo = $resultSet->current();
-        
-        return $photo;*/
     }
     
     public function getPreviousPhoto($id)
     {
         
     }
-    
-    
     
     public function savePhoto($data, $album_id = null)
     {
